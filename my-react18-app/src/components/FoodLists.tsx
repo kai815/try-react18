@@ -61,18 +61,25 @@ const filterFoodList = (text:string, genre:string):Food[] => {
 }
 
 export const FoodLists = () => {
+  const [isPending, startTransition] = useTransition()
   const [filteredFoodList, setFilteredFoodList] = useState<Food[]>(foodList)
   const [searchText, setSearchText] = useState<string>('')
   const [selectedGenre, setSelectedGenre] = useState<string>('')
 
   const onInputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value)
-    setFilteredFoodList(filterFoodList(event.target.value, selectedGenre))
+    startTransition(()=>{
+      setFilteredFoodList(filterFoodList(event.target.value, selectedGenre))
+    })
+
   }
 
   const onSelectChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(event.target.value)
-    setFilteredFoodList(filterFoodList(searchText, event.target.value))
+    startTransition(()=>{
+      setFilteredFoodList(filterFoodList(searchText, event.target.value))
+    })
+
   }
 
   return (
