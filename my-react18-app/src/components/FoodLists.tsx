@@ -103,7 +103,11 @@ export const FoodLists = () => {
           </option>
         </select>
       </div>
-      {filteredFoodList.map((food)=>{
+      {isPending ?
+        <div style={{width:'500px',height:'100vh',margin:'auto'}}>
+          更新中・・・
+        </div> :
+        filteredFoodList.map((food)=>{
         return (
           <div key={food.id} style={{width:'500px',background:food.color}}>
             <p>{food.name}</p>
